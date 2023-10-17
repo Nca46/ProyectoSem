@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block contenido %}
+
+<form method="post">
+  {% csrf_token %}
+  {{form.as_ul}}
+  <button class="btn btn-success" type="submit">Enviar</button>
+</form>
+
+{% endblock contenido %}

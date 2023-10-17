@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+  <h2>Tipos de buses</h2>
+  <ul>
+    {% for tipo_bus in tipos_de_buses %}
+    <li>{{tipo_bus.tipo}}: {{tipo_bus.capacidad}}</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'dashboard:index' %}" class="btn btn-secondary">Retorname</a>
+</div>
+{% endblock contenido %}

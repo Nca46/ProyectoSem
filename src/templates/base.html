@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+    <!-- bootstrap-5 -->
+    <link rel="stylesheet" href="{% static 'lib/node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    <script src="{% static 'lib/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    {% block scripts %}
+    <!-- aqui van los scripts -->
+
+    {% endblock scripts %}
+  </head>
+  <body>
+    <header>
+    </header>
+
+    <main>
+      {% block contenido %}
+      {% endblock contenido %}
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

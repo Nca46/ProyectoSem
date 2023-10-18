@@ -6,5 +6,7 @@ AcEnv
 pip install -r .\requirements.txt
 
 pip install --upgrade pip
+
 cd /src/static/lib/
+
 npm install

@@ -2,17 +2,29 @@
 
 {% block contenido %}
 <div class="container">
-  <h2>Tipos de buses</h2>
-  <ul>
-    {% for tipo_bus in tipos_de_buses %}
-    <li>{{tipo_bus.tipo}}: {{tipo_bus.capacidad}}
-        <a href="{% url 'buses:editar_tipo_bus' tipo_bus.id %}">Editar</a>
-        <a href="{% url 'buses:eliminar_tipo_bus' tipo_bus.id %}">Eliminar</a>
+  <h2 class="mt-4">Tipos de Buses</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Tipo de Bus</th>
+        <th>Capacidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for tipo_bus in tipos_de_buses %}
+      <tr>
+        <td>{{ tipo_bus.tipo }}</td>
+        <td>{{ tipo_bus.capacidad }}</td>
+        <td>
+          <a href="{% url 'buses:editar_tipo_bus' tipo_bus.id %}" class="btn btn-warning btn-sm mx-1">Editar</a>
+          <a href="{% url 'buses:eliminar_tipo_bus' tipo_bus.id %}" class="btn btn-danger btn-sm mx-1">Eliminar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-    </li>
-    {% endfor %}
-  </ul>
-
-  <a href="{% url 'dashboard:index' %}" class="btn btn-secondary">Menu</a>
+    <a href="{% url 'buses:crear_tipo_bus' %}" class="btn btn-secondary ml-2">Crear Tipo Bus</a>
 </div>
 {% endblock contenido %}

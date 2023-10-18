@@ -38,7 +38,7 @@ class ViewCrearBus(CreateView):
     model = Bus
     success_url =reverse_lazy('dashboard:index')
 
-class ViewEditarBus(CreateView):
+class ViewEditarBus(UpdateView):
     template_name = 'editar_bus.html'
     fields = "__all__"
     model = Bus

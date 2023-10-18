@@ -2,17 +2,31 @@
 
 {% block contenido %}
 <div class="container">
-  <h2>Buses</h2>
-  <ul>
-    {% for bus in buses %}
-    <li>{{bus.placa}}: {{bus.ultima_fecha_rotacion}}: {{bus.tipo_bus}}
-        <a href="{% url 'buses:editar_bus' bus.id %}">Editar</a>
-        <a href="{% url 'buses:eliminar_bus' bus.id %}">Eliminar</a>
+  <h2 class="mt-3">Buses</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Placa</th>
+        <th>Última Fecha Rotación</th>
+        <th>Tipo de Bus</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for bus in buses %}
+      <tr>
+        <td>{{ bus.placa }}</td>
+        <td>{{ bus.ultima_fecha_rotacion }}</td>
+        <td>{{ bus.tipo_bus }}</td>
+        <td>
+          <a href="{% url 'buses:editar_bus' bus.id %}" class="btn btn-primary btn-sm">Editar</a>
+          <a href="{% url 'buses:eliminar_bus' bus.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-    </li>
-    {% endfor %}
-  </ul>
-
-  <a href="{% url 'dashboard:index' %}" class="btn btn-secondary">Menu</a>
+  <a href="{% url 'buses:crear_bus' %}" class="btn btn-secondary mt-3">Crear Bus</a>
 </div>
 {% endblock contenido %}

@@ -1,14 +1,19 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-
-<h2>Editar Bus</h2>
-
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary" type="submit">Guardar Cambios</button>
-  <a href="{% url 'buses:crear_bus' %}" class="btn btn-secondary">Cancelar</a>
-</form>
-
+<div class="container">
+  <h2 class="mt-4">Editar Bus</h2>
+  <div class="card">
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+          <a href="{% url 'buses:ver_bus' %}" class="btn btn-secondary ml-2">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock contenido %}

@@ -2,13 +2,21 @@
 
 {% block contenido %}
 
-<h2>Editar Tipo de Bus</h2>
+<div class="container">
+  <h2 class="mt-4">Editar Tipo de Bus</h2>
+  <div class="card">
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary" type="submit">Guardar Cambios</button>
-  <a href="{% url 'buses:tipos_buses' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+          <a href="{% url 'buses:tipos_buses' %}" class="btn btn-secondary ml-2">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock contenido %}

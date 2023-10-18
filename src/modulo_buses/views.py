@@ -9,16 +9,42 @@ class ViewListarTiposBuses(ListView):
 
 # Create your views here.
 class ViewCrearTipoBus(CreateView):
-    template_name = 'crear_bus.html'
+    template_name = 'crear_tipo_bus.html'
     fields = "__all__"
     model = TipoBus
     success_url = reverse_lazy('dashboard:index')
 
 
 class ViewEditarTiposBus(UpdateView):
-    pass
+    model = TipoBus
+    template_name = 'editar_tipo_bus.html'
+    fields = "__all__"
+    success_url = reverse_lazy('dashboard:index')
 
 
 class ViewEliminarTipoBus(DeleteView):
-    pass
+    model = TipoBus
+    template_name = 'eliminar_tipo_bus.html'
+    success_url = reverse_lazy('dashboard:index')
 
+class ViewListarBuses(ListView):
+    model = Bus
+    context_object_name = 'buses'
+    template_name = 'vista_buses.html'
+
+class ViewCrearBus(CreateView):
+    template_name = 'crear_bus.html'
+    fields = "__all__"
+    model = Bus
+    success_url =reverse_lazy('dashboard:index')
+
+class ViewEditarBus(CreateView):
+    template_name = 'editar_bus.html'
+    fields = "__all__"
+    model = Bus
+    success_url = reverse_lazy('dashboard:index')
+
+class ViewEliminarBus(DeleteView):
+    model = Bus
+    template_name = 'eliminar_bus.html'
+    success_url = reverse_lazy('dashboard:index')

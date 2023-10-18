@@ -2,7 +2,15 @@
 
 {% block contenido %}
 <div class="container">
-  <h1>Hola noe</h1>
+    <h1 class="display-4">Página de Inicio</h1>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a class="btn btn-primary" href="{% url 'buses:tipos_buses' %}">Tipos de buses</a>
+        </li>
+        <li class="list-group-item">
+            <a class="btn btn-primary" href="{% url 'buses:ver_bus' %}">Buses</a>
+        </li>
+    </ul>
 </div>
 
 {% endblock contenido %}

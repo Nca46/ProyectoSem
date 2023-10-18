@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+  <h2>Buses</h2>
+  <ul>
+    {% for bus in buses %}
+    <li>{{bus.placa}}: {{bus.ultima_fecha_rotacion}}: {{bus.tipo_bus}}
+        <a href="{% url 'buses:editar_bus' bus.id %}">Editar</a>
+        <a href="{% url 'buses:eliminar_bus' bus.id %}">Eliminar</a>
+
+    </li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'dashboard:index' %}" class="btn btn-secondary">Menu</a>
+</div>
+{% endblock contenido %}

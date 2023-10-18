@@ -5,10 +5,14 @@
   <h2>Tipos de buses</h2>
   <ul>
     {% for tipo_bus in tipos_de_buses %}
-    <li>{{tipo_bus.tipo}}: {{tipo_bus.capacidad}}</li>
+    <li>{{tipo_bus.tipo}}: {{tipo_bus.capacidad}}
+        <a href="{% url 'buses:editar_tipo_bus' tipo_bus.id %}">Editar</a>
+        <a href="{% url 'buses:eliminar_tipo_bus' tipo_bus.id %}">Eliminar</a>
+
+    </li>
     {% endfor %}
   </ul>
 
-  <a href="{% url 'dashboard:index' %}" class="btn btn-secondary">Retorname</a>
+  <a href="{% url 'dashboard:index' %}" class="btn btn-secondary">Menu</a>
 </div>
 {% endblock contenido %}

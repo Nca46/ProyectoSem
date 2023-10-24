@@ -23,19 +23,39 @@
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'dashboard:index' %}">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'buses:tipos_buses' %}">Tipo Buses</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'buses:ver_bus' %}">Buses</a>
-          </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'dashboard:index' %}">Inicio</a>
+            </li>
+
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'buses:tipos_buses' %}">Tipo Buses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'buses:ver_bus' %}">Buses</a>
+                </li>
+            {% endif %}
         </ul>
-      </div>
+
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav" style="margin-left: auto;">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'authenticate:logout' %}">Cerrar sesión</a>
+                </li>
+            </ul>
+        {% else %}
+            <ul class="navbar-nav" style="margin-left: auto;">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'authenticate:login' %}">Iniciar sesión</a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+
+
     </nav>
   </header>
 

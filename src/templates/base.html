@@ -37,6 +37,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'buses:ver_bus' %}">Buses</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:auth_user_add' %}">Crear Usuario</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:auth_group_add' %}">Crear Rol</a>
+                </li>
             {% endif %}
         </ul>
 

@@ -11,9 +11,9 @@ class Bus(models.Model):
     ultima_fecha_rotacion = models.DateField(blank=False, verbose_name='Ultima fecha de rotación')
     tipo_bus = models.ForeignKey(TipoBus, on_delete=models.PROTECT)
 
-class Registro(models.Model):
-    fechaHora = models.DateTimeField(),
+class RegistroBus(models.Model):
+    fechaHora = models.DateTimeField()
     idBus = models.ForeignKey(Bus, on_delete=models.PROTECT)
-    NumAprox = models.IntegerField(blank=False),
-    PasaAprox = models.IntegerField(blank=False)
+    NumeroApro = models.IntegerField(blank=False)
+    PasajeApro = models.IntegerField(blank=False)
 

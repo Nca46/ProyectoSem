@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-<div class="container">
-    <h1 class="display-4">Página de Inicio</h1>
-    <!--
-    <ul class="list-group">
-        <li class="list-group-item">
-            <a class="btn btn-primary" href="{% url 'buses:tipos_buses' %}">Tipos de buses</a>
-        </li>
-        <li class="list-group-item">
-            <a class="btn btn-primary" href="{% url 'buses:ver_bus' %}">Buses</a>
-        </li>
-    </ul>
-    -->
-</div>
+    <h1>Mi Mapa de Google</h1>
+    <div id="map" style="width: 100%; height: 400px;"></div>
 
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 15.783471, lng: -90.230759 }, // Coordenadas de tu elección
+                zoom: 12 // Nivel de zoom
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy5gEodZV2TsHxd1UUQCiD1xx1VaAt5Hk&callback=initMap" async defer></script>
+</body>
 {% endblock contenido %}

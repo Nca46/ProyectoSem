@@ -30,6 +30,10 @@
                 <a class="nav-link" href="{% url 'dashboard:index' %}">Inicio</a>
             </li>
 
+            <li class="nav-item active">
+                <a class="nav-link" href="">Horarios</a>
+            </li>
+
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'buses:tipos_buses' %}">Tipo Buses</a>

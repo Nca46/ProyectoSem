@@ -1,19 +1,17 @@
 from django.db import models
 
-class TipoBus(models.Model):
-    tipo = models.CharField(max_length=256,blank=False)
-    capacidad = models.IntegerField(blank=False)
-    def __str__(self):
-        return self.tipo
+desplegable = (
+    ('microbus', 'Microbus'),
+    ('coaster', 'Coaster')
+)
 
 class Bus(models.Model):
-    placa = models.CharField(max_length=256, blank=False, verbose_name='Numero de placa')
-    ultima_fecha_rotacion = models.DateField(blank=False, verbose_name='Ultima fecha de rotación')
-    tipo_bus = models.ForeignKey(TipoBus, on_delete=models.PROTECT)
+    tipo_bus = models.CharField(max_length=256, blank=False,choices=desplegable, verbose_name='Tipo de Autobus')
+    numero_placa = models.CharField(max_length=256, blank=False, verbose_name='No. de placa')
+    color = models.CharField(max_length=256, blank=False, verbose_name='Color')
+    modelo = models.CharField(max_length=256, blank=True, verbose_name='Modelo')
+    marca = models.CharField(max_length=256, blank=True, verbose_name='Marca')
+    capacidad = models.IntegerField(verbose_name='Capacidad')
 
-class RegistroBus(models.Model):
-    fechaHora = models.DateTimeField()
-    idBus = models.ForeignKey(Bus, on_delete=models.PROTECT)
-    NumeroApro = models.IntegerField(blank=False)
-    PasajeApro = models.IntegerField(blank=False)
+
 

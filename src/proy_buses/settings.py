@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'modulo_buses',
     'modulo_dashboard',
-    'modulo_auth'
+    'modulo_auth',
+    'modulo_personal',
+    'modulo_registro'
 ]
 
 MIDDLEWARE = [

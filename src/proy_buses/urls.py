@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('modulo_dashboard.urls')),
     path('buses/', include('modulo_buses.urls')),
     path('auth/', include('modulo_auth.urls')),
-    path('personal/', include('modulo_personal.urls'))
+    path('personal/', include('modulo_personal.urls')),
+    path('horario/', include('modulo_registro.urls'))
 ]

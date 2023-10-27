@@ -18,9 +18,14 @@ class Bus(models.Model):
     marca = models.CharField(max_length=256, blank=True, verbose_name='Marca')
     capacidad = models.IntegerField(default=0,verbose_name='Capacidad')
 
+    def __str__(self):
+        return str(self.id)
+
+
 class Registro(models.Model):
     origen = models.CharField(max_length=256, blank=False,choices=ruta, verbose_name='Origen Bus')
     cantidad_per = models.IntegerField(blank=False, verbose_name='Cantidad de Pasajeros')
     pasaje = models.DecimalField(max_digits=50, decimal_places=3 ,blank=False, verbose_name='Cantidad de Pasaje')
     idBus = models.ForeignKey(Bus, on_delete=models.PROTECT)
     fecha = models.DateTimeField(verbose_name='Fecha')
+

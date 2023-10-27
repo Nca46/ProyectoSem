@@ -25,9 +25,6 @@ class ViewEliminarRegistro(DeleteView):
     success_url = reverse_lazy('dashboard:index')
 
 
-
-
-
 class ViewListarBuses(ListView):
     model = Bus
     context_object_name = 'buses'

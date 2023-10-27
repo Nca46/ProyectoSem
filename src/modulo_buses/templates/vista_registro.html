@@ -6,33 +6,30 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Tipo de bus</th>
-        <th>Numero Placa</th>
-        <th>Color</th>
-        <th>Modelo</th>
-        <th>Marca</th>
-        <th>Capacidad</th>
-
+        <th>Origen</th>
+        <th>Cantidad de Personas</th>
+        <th>Pasaje</th>
+        <th>Buses</th>
+        <th>Fecha</th>
       </tr>
     </thead>
     <tbody>
       {% for bus in registro %}
       <tr>
-        <td>{{ bus.tipo_bus }}</td>
-        <td>{{ bus.numero_placa }}</td>
-        <td>{{ bus.color }}</td>
-        <td>{{ bus.modelo }}</td>
-        <td>{{ bus.marca }}</td>
-        <td>{{ bus.capacidad }}</td>
+        <td>{{ bus.origen }}</td>
+        <td>{{ bus.cantidad_per }}</td>
+        <td>{{ bus.pasaje }}</td>
+        <td>{{ bus.idBus }}</td>
+        <td>{{ bus.fecha }}</td>
         <td>
-          <a href="{% url 'buses:editar_bus' bus.id %}" class="btn btn-primary btn-sm">Editar</a>
-          <a href="{% url 'buses:eliminar_bus' bus.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+          <a href="{% url 'buses:editar_registro' bus.id %}" class="btn btn-primary btn-sm">Editar</a>
+          <a href="{% url 'buses:eliminar_registro' bus.id %}" class="btn btn-danger btn-sm">Eliminar</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 
-  <a href="{% url 'buses:crear_bus' %}" class="btn btn-secondary mt-3">Crear Bus</a>
+  <a href="{% url 'buses:crear_registro' %}" class="btn btn-secondary mt-3">Crear Registro</a>
 </div>
 {% endblock contenido %}

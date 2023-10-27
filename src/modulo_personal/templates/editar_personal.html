@@ -2,7 +2,7 @@
 
 {% block contenido %}
 <div class="container">
-  <h2 class="mt-4">Editar Registro</h2>
+  <h2 class="mt-4">Editar Personal</h2>
   <div class="card">
     <div class="card-body">
       <form method="post">
@@ -10,7 +10,7 @@
         {{ form.as_p }}
         <div class="text-center">
           <button class="btn btn-primary" type="submit">Guardar Cambios</button>
-          <a href="{% url 'buses:ver_registro' %}" class="btn btn-secondary ml-2">Cancelar</a>
+          <a href="{% url 'personal:ver_personal' %}" class="btn btn-secondary ml-2">Cancelar</a>
         </div>
       </form>
     </div>

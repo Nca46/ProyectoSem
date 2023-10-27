@@ -11,8 +11,8 @@ urlpatterns = [
     path('ver_bus/', ViewListarBuses.as_view(), name='ver_bus'),
 
     path('crear_registro/', ViewCrearRegistro.as_view(), name='crear_registro'),
-    path('editar_registro/', ViewEditarRegistro.as_view(), name='editar_registro'),
-    path('eliminar_registro/', ViewEliminarRegistro.as_view(), name='eliminar_registro'),
+    path('editar_registro/<int:pk>/', ViewEditarRegistro.as_view(), name='editar_registro'),
+    path('eliminar_registro/<int:pk>/', ViewEliminarRegistro.as_view(), name='eliminar_registro'),
     path('ver_registro/', ViewListarRegistro.as_view(), name='ver_registro')
 ]
 

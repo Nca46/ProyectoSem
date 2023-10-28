@@ -1,7 +1,7 @@
 ### Instalar Entorno Virtual
  py -m venv env
 ### Activar Entorno virtual
-AcEnv
+AcEnv env\Scripts\activate
 ### Instalar Requerimiento
 pip install -r .\requirements.txt
 

@@ -2,7 +2,7 @@
 
 {% block contenido %}
 <div class="container">
-  <h2 class="mt-4">Editar Bus</h2>
+  <h2 class="mt-4">Editar Personal</h2>
   <div class="card">
     <div class="card-body">
       <form method="post">
@@ -10,7 +10,7 @@
         {{ form.as_p }}
         <div class="text-center">
           <button class="btn btn-primary" type="submit">Guardar Cambios</button>
-          <a href="{% url 'buses:ver_bus' %}" class="btn btn-secondary ml-2">Cancelar</a>
+          <a href="{% url 'horario:ver_horario' %}" class="btn btn-secondary ml-2">Cancelar</a>
         </div>
       </form>
     </div>

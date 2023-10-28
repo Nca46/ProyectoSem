@@ -1,16 +1,94 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-<div class="container">
-    <h1 class="display-4">Página de Inicio</h1>
-    <ul class="list-group">
-        <li class="list-group-item">
-            <a class="btn btn-primary" href="{% url 'buses:tipos_buses' %}">Tipos de buses</a>
-        </li>
-        <li class="list-group-item">
-            <a class="btn btn-primary" href="{% url 'buses:ver_bus' %}">Buses</a>
-        </li>
-    </ul>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Horario</h2>
+            <p>Serivio en Funcionamiento</p>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Horario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lunes</td>
+                        <td>5:00 - 18:30</td>
+                    </tr>
+                    <tr>
+                        <td>Martes</td>
+                        <td>5:00 - 18:30</td>
+                    </tr>
+                    <tr>
+                        <td>Miércoles</td>
+                        <td>5:00 - 18:30</td>
+                    </tr>
+                    <tr>
+                        <td>Jueves</td>
+                        <td>5:00 - 18:30</td>
+                    </tr>
+                    <tr>
+                        <td>Viernes</td>
+                        <td>5:00 - 18:30</td>
+                    </tr>
+                    <tr>
+                        <td>Sábado</td>
+                        <td>5:00 - 18:30</td>
+                    </tr>
+                    <tr>
+                        <td>Domingo</td>
+                        <td>5:00 - 18:30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h2>Jueves 15</h2>
+            <p>Irregularidades debido a desfile</p>
+            <!-- Aquí puedes agregar un formulario para llenar información sobre las irregularidades -->
+        </div>
+    </div>
 </div>
+    <h1>Mi Mapa de Google</h1>
+    <div id="map" style="width: 100%; height: 200px;"></div>
 
+    <button id="guardar-ubicacion">Guardar Ubicación</button>
+
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 15.783471, lng: -90.230759 }, // Coordenadas de tu elección
+                zoom: 12 // Nivel de zoom
+            });
+
+            var marker;
+
+            document.getElementById('guardar-ubicacion').addEventListener('click', function () {
+                if (marker) {
+                    // Obtén las coordenadas del marcador y guárdalas en tu aplicación
+                    var latlng = marker.getPosition();
+                    alert('Ubicación guardada: Latitud ' + latlng.lat() + ', Longitud ' + latlng.lng());
+                } else {
+                    alert('No has seleccionado una ubicación en el mapa.');
+                }
+            });
+
+            // Agrega un evento click para permitir al usuario seleccionar una ubicación en el mapa
+            map.addListener('click', function(event) {
+                if (marker) {
+                    marker.setPosition(event.latLng);
+                } else {
+                    marker = new google.maps.Marker({
+                        position: event.latLng,
+                        map: map,
+                        title: 'Parada de Autobús'
+                    });
+                }
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy5gEodZV2TsHxd1UUQCiD1xx1VaAt5Hk&callback=initMap" async defer></script>
 {% endblock contenido %}

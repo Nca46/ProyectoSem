@@ -2,35 +2,33 @@ from  .models import *
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 
-class ViewListarTiposBuses(ListView):
-    model = TipoBus
-    context_object_name = 'tipos_de_buses'
-    template_name = 'listar_tipos_bus.html'
+class ViewListarRegistro(ListView):
+    model = Registro
+    context_object_name = 'registro'
+    template_name = 'vista_registro.html'
 
-# Create your views here.
-class ViewCrearTipoBus(CreateView):
-    template_name = 'crear_tipo_bus.html'
+class ViewCrearRegistro(CreateView):
+    template_name = 'crear_registro.html'
+    model = Registro
     fields = "__all__"
-    model = TipoBus
-    success_url = reverse_lazy('dashboard:index')
+    success_url =reverse_lazy('dashboard:index')
 
-
-class ViewEditarTiposBus(UpdateView):
-    model = TipoBus
-    template_name = 'editar_tipo_bus.html'
+class ViewEditarRegistro(UpdateView):
+    template_name = 'editar_registro.html'
     fields = "__all__"
+    model = Registro
     success_url = reverse_lazy('dashboard:index')
 
-
-class ViewEliminarTipoBus(DeleteView):
-    model = TipoBus
-    template_name = 'eliminar_tipo_bus.html'
+class ViewEliminarRegistro(DeleteView):
+    model = Registro
+    template_name = 'eliminar_registro.html'
     success_url = reverse_lazy('dashboard:index')
+
 
 class ViewListarBuses(ListView):
     model = Bus
     context_object_name = 'buses'
-    template_name = 'vista_buses.html'
+    template_name = 'vista_bus.html'
 
 class ViewCrearBus(CreateView):
     template_name = 'crear_bus.html'
@@ -38,7 +36,7 @@ class ViewCrearBus(CreateView):
     model = Bus
     success_url =reverse_lazy('dashboard:index')
 
-class ViewEditarBus(CreateView):
+class ViewEditarBus(UpdateView):
     template_name = 'editar_bus.html'
     fields = "__all__"
     model = Bus

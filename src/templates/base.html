@@ -8,50 +8,72 @@
     {% load static %}
     <!-- bootstrap-5 -->
     <link rel="stylesheet" href="{% static 'lib/node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="{% static 'lib/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     {% block scripts %}
     <!-- aqui van los scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     {% endblock scripts %}
   </head>
   <body>
     <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Buses</a>
+   <nav class="navbar navbar-expand-lg navbar-light bg-custom">
+       <a class="navbar-brand" href="{% url 'dashboard:index' %}">
+        <i class="fas fa-bus"></i> 3K Business Group
+    </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'dashboard:index' %}">Inicio</a>
+                      <a class="nav-link" href="{% url 'dashboard:index' %}">
+                <i class="fas fa-home"></i> Inicio
+            </a>
             </li>
 
             {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'buses:ver_bus' %}">Buses</a>
+               <li class="nav-item">
+                    <a class="nav-link" href="{% url 'buses:ver_bus' %}">
+                        <i class="fas fa-bus"></i> Buses
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'buses:ver_registro' %}">Registro</a>
+                    <a class="nav-link" href="{% url 'buses:ver_registro' %}">
+                        <i class="fas fa-clipboard"></i> Registro
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'personal:ver_personal' %}">Personal</a>
+                    <a class="nav-link" href="{% url 'personal:ver_personal' %}">
+                        <i class="fas fa-user"></i> Personal
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'horario:ver_horario' %}">Horario</a>
+                    <a class="nav-link" href="{% url 'horario:ver_horario' %}">
+                        <i class="fas fa-clock"></i> Horario
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'horario:ver_retraso' %}">Retraso</a>
+                    <a class="nav-link" href="{% url 'horario:ver_retraso' %}">
+                        <i class="fas fa-clock"></i> Retraso
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:auth_user_add' %}">Crear Usuario</a>
+                    <a class="nav-link" href="{% url 'admin:auth_user_add' %}">
+                        <i class="fas fa-user-plus"></i> Crear Usuario
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:auth_group_add' %}">Crear Rol</a>
+                    <a class="nav-link" href="{% url 'admin:auth_group_add' %}">
+                        <i class="fas fa-users-cog"></i> Crear Rol
+                    </a>
                 </li>
+
             {% endif %}
         </ul>
 
@@ -74,12 +96,20 @@
     </nav>
   </header>
 
+<div class="container">
     <main>
-      {% block contenido %}
-
-      {% endblock contenido %}
+        {% block contenido %}
+        <!-- Tu contenido va aquí -->
+        {% endblock contenido %}
     </main>
-    <footer>
-    </footer>
-  </body>
+</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2023 3K Business Group Guatemala. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
 </html>

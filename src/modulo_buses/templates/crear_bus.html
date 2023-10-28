@@ -5,11 +5,16 @@
   <h2 class="mt-3">Formulario de Buses</h2>
   <form method="post">
     {% csrf_token %}
-    <table class="table">
-      {{ form.as_table }}
-    </table>
-    <button class="btn btn-success" type="submit">Enviar</button>
+    <div class="table-responsive">
+      <table class="table">
+        {{ form.as_table }}
+      </table>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-3">
+      <button class="btn btn-success" type="submit">Enviar</button>
+      <a href="{% url 'buses:ver_bus' %}" class="btn btn-secondary mt-2 mt-md-0">Cancelar</a>
+    </div>
   </form>
-  <a href="{% url 'buses:ver_bus' %}" class="btn btn-secondary mt-3">Cancelar</a>
 </div>
+
 {% endblock contenido %}

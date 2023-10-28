@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+  <h2 class="mt-3">Formulario Personal</h2>
+  <form method="post">
+    {% csrf_token %}
+    <table class="table">
+      {{ form.as_table }}
+    </table>
+    <button class="btn btn-success" type="submit">Enviar</button>
+  </form>
+  <a href="{% url 'personal:ver_personal' %}" class="btn btn-secondary mt-3">Cancelar</a>
+</div>
+{% endblock contenido %}

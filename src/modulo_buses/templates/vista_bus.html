@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+  <h2 class="mt-3">Buses</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Tipo de bus</th>
+        <th>Numero Placa</th>
+        <th>Color</th>
+        <th>Modelo</th>
+        <th>Marca</th>
+        <th>Capacidad</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for bus in buses %}
+      <tr>
+        <td>{{ bus.tipo_bus }}</td>
+        <td>{{ bus.numero_placa }}</td>
+        <td>{{ bus.color }}</td>
+        <td>{{ bus.modelo }}</td>
+        <td>{{ bus.marca }}</td>
+        <td>{{ bus.capacidad }}</td>
+        <td>
+          <a href="{% url 'buses:editar_bus' bus.id %}" class="btn btn-primary btn-sm">Editar</a>
+          <a href="{% url 'buses:eliminar_bus' bus.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'buses:crear_bus' %}" class="btn btn-secondary mt-3">Crear Bus</a>
+</div>
+{% endblock contenido %}

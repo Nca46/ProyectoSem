@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+  <h2 class="mt-3">Horario</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Dia</th>
+        <th>Horario Inicio</th>
+        <th>Horario FIn</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for horario in hora %}
+      <tr>
+        <td>{{ horario.dia }}</td>
+        <td>{{ horario.horario_inicio }}</td>
+        <td>{{ horario.horario_fin }}</td>
+        <td>
+          <a href="{% url 'horario:editar_horario' horario.id %}" class="btn btn-primary btn-sm">Editar</a>
+          <a href="{% url 'horario:eliminar_horario' horario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'horario:crear_horario' %}" class="btn btn-secondary mt-3">Crear horario</a>
+</div>
+{% endblock contenido %}

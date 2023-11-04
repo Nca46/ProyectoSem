@@ -1,94 +1,56 @@
 {% extends "base.html" %}
 
+{% block scripts %}
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+{% endblock %}
 {% block contenido %}
-    <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Horario</h2>
-            <p>Serivio en Funcionamiento</p>
-            <table class="table table-responsive">
-                <thead>
-                    <tr>
-                        <th>Día</th>
-                        <th>Horario</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Lunes</td>
-                        <td>5:00 - 18:30</td>
-                    </tr>
-                    <tr>
-                        <td>Martes</td>
-                        <td>5:00 - 18:30</td>
-                    </tr>
-                    <tr>
-                        <td>Miércoles</td>
-                        <td>5:00 - 18:30</td>
-                    </tr>
-                    <tr>
-                        <td>Jueves</td>
-                        <td>5:00 - 18:30</td>
-                    </tr>
-                    <tr>
-                        <td>Viernes</td>
-                        <td>5:00 - 18:30</td>
-                    </tr>
-                    <tr>
-                        <td>Sábado</td>
-                        <td>5:00 - 18:30</td>
-                    </tr>
-                    <tr>
-                        <td>Domingo</td>
-                        <td>5:00 - 18:30</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <h2>Jueves 15</h2>
-            <p>Irregularidades debido a desfile</p>
-            <!-- Aquí puedes agregar un formulario para llenar información sobre las irregularidades -->
-        </div>
-    </div>
-</div>
-    <h1>Mi Mapa de Google</h1>
-    <div id="map" style="width: 100%; height: 200px;"></div>
 
-    <button id="guardar-ubicacion">Guardar Ubicación</button>
+    <h2>Horarios</h2>
+    <ul>
+        {% for item in items %}
 
+            <li>{{ item.dia }} - {{ item.horario_inicio }} a {{ item.horario_fin }}</li>
+        {% endfor %}
+    </ul>
+
+    <div id="map" style="height: 400px; width: 100%"></div>
+    <button id="showLocationButton">Mostrar Ubicación</button>
     <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 15.783471, lng: -90.230759 }, // Coordenadas de tu elección
-                zoom: 12 // Nivel de zoom
-            });
+        var map = L.map('map').setView([15.4844, -90.3770], 13);
 
-            var marker;
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
 
-            document.getElementById('guardar-ubicacion').addEventListener('click', function () {
-                if (marker) {
-                    // Obtén las coordenadas del marcador y guárdalas en tu aplicación
-                    var latlng = marker.getPosition();
-                    alert('Ubicación guardada: Latitud ' + latlng.lat() + ', Longitud ' + latlng.lng());
-                } else {
-                    alert('No has seleccionado una ubicación en el mapa.');
-                }
-            });
+        // Función para manejar el clic en el mapa
+        function onMapClick(e) {
+            // Obtiene las coordenadas donde se hizo clic
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
 
-            // Agrega un evento click para permitir al usuario seleccionar una ubicación en el mapa
-            map.addListener('click', function(event) {
-                if (marker) {
-                    marker.setPosition(event.latLng);
-                } else {
-                    marker = new google.maps.Marker({
-                        position: event.latLng,
-                        map: map,
-                        title: 'Parada de Autobús'
-                    });
-                }
-            });
+            // Crea un marcador en esa ubicación
+            L.marker([lat, lng]).addTo(map);
         }
+
+        // Agrega un evento de clic al mapa
+        map.on('click', onMapClick);
+
+        // Función para mostrar la ubicación actual
+        document.getElementById('showLocationButton').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+
+                    alert('Ubicación actual:\nLatitud: ' + lat + '\nLongitud: ' + lng);
+                }, function(error) {
+                    alert('Error al obtener la ubicación: ' + error.message);
+                });
+            } else {
+                alert('Geolocalización no es compatible en este navegador.');
+            }
+        });
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy5gEodZV2TsHxd1UUQCiD1xx1VaAt5Hk&callback=initMap" async defer></script>
 {% endblock contenido %}
+

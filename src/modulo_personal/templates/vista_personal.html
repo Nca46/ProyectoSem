@@ -8,10 +8,7 @@
       <thead>
         <tr>
           <th>Nombres</th>
-          <th>Apellidos</th>
-          <th>DPI</th>
-          <th>Telefono</th>
-          <th>Correo</th>
+          <th>Rol</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -19,13 +16,11 @@
         {% for personal in persona %}
         <tr>
           <td>{{ personal.nombres }}</td>
-          <td>{{ personal.apellidos }}</td>
-          <td>{{ personal.DPI }}</td>
-          <td>{{ personal.telefono }}</td>
-          <td>{{ personal.correo }}</td>
+          <td>{{ personal.rol }}</td>
           <td>
             <a href="{% url 'personal:editar_personal' personal.id %}" class="btn btn-primary btn-sm">Editar</a>
             <a href="{% url 'personal:eliminar_personal' personal.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+            <button class="btn btn-info btn-sm" onclick="mostrarInfo('{{ personal.apellidos }}', '{{ personal.DPI }}', '{{ personal.telefono }}', '{{ personal.correo }}')">Ver Más</button>
           </td>
         </tr>
         {% endfor %}
@@ -34,6 +29,67 @@
   </div>
 
   <a href="{% url 'personal:crear_personal' %}" class="btn btn-secondary mt-3">Crear Personal</a>
-</div>
 
+  <!-- Ventana emergente oculta -->
+  <div id="infoPopup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="cerrarInfo()">&times;</span>
+      <h3>Información adicional</h3>
+      <p>Apellidos: <span id="apellidos"></span></p>
+      <p>DPI: <span id="DPI"></span></p>
+      <p>Telefono: <span id="telefono"></span></p>
+      <p>Correo: <span id="correo"></span></p>
+    </div>
+  </div>
+
+  <style>
+    /* Estilos para la ventana emergente */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .popup-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    function mostrarInfo(apellidos, DPI, telefono, correo) {
+      // Mostrar la ventana emergente
+      const infoPopup = document.getElementById('infoPopup');
+      document.getElementById('apellidos').textContent = apellidos;
+      document.getElementById('DPI').textContent = DPI;
+      document.getElementById('telefono').textContent = telefono;
+      document.getElementById('correo').textContent = correo;
+      infoPopup.style.display = 'block';
+    }
+
+    function cerrarInfo() {
+      // Cerrar la ventana emergente
+      const infoPopup = document.getElementById('infoPopup');
+      infoPopup.style.display = 'none';
+    }
+  </script>
+</div>
 {% endblock contenido %}

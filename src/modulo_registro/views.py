@@ -36,15 +36,15 @@ class ViewCrearRetraso(CreateView):
     template_name = 'crear_retraso.html'
     model = Retraso
     fields = "__all__"
-    success_url =reverse_lazy('horario:ver_horario')
+    success_url =reverse_lazy('horario:ver_retraso')
 
 class ViewEditarRetraso(UpdateView):
     template_name = 'editar_retraso.html'
     fields = "__all__"
     model = Retraso
-    success_url = reverse_lazy('horario:ver_horario')
+    success_url = reverse_lazy('horario:ver_retraso')
 
 class ViewEliminarRetraso(DeleteView):
     model = Retraso
     template_name = 'eliminar_retraso.html'
-    success_url = reverse_lazy('horario:ver_horario')
+    success_url = reverse_lazy('horario:ver_retraso')

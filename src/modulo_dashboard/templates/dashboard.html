@@ -9,48 +9,105 @@
     <h2>Horarios</h2>
     <ul>
         {% for item in items %}
-
             <li>{{ item.dia }} - {{ item.horario_inicio }} a {{ item.horario_fin }}</li>
         {% endfor %}
     </ul>
 
-    <div id="map" style="height: 400px; width: 100%"></div>
-    <button id="showLocationButton">Mostrar Ubicación</button>
-    <script>
-        var map = L.map('map').setView([15.4844, -90.3770], 13);
+     <h2>Notificaciones de Retraso</h2>
+  <ul>
+    {% for retraso in retrasos %}
+      <li>
+        <strong>{{ retraso.titulo }}</strong><br>
+        Día: {{ retraso.dia }}<br>
+        Descripción: {{ retraso.descripcion }}
+      </li>
+    {% endfor %}
+  </ul>
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
 
-        // Función para manejar el clic en el mapa
-        function onMapClick(e) {
-            // Obtiene las coordenadas donde se hizo clic
-            var lat = e.latlng.lat;
-            var lng = e.latlng.lng;
+<button id="saveLocationButton" onclick="guardarUbicacion()">Guardar Ubicación</button>
+<div id="map" style="height: 400px; width: 100%"></div>
+<script>
+    var map = L.map('map').setView([15.4844, -90.3770], 13);
 
-            // Crea un marcador en esa ubicación
-            L.marker([lat, lng]).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    var savedLocation = null; // Variable para almacenar la ubicación guardada
+
+    var marker = null; // Variable para almacenar el marcador en el mapa
+
+    // Función para manejar el clic en el mapa
+    function onMapClick(e) {
+        // Obtiene las coordenadas donde se hizo clic
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+
+        // Si ya existe un marcador, quítalo
+        if (marker) {
+            map.removeLayer(marker);
         }
 
-        // Agrega un evento de clic al mapa
-        map.on('click', onMapClick);
+        // Crea un marcador en esa ubicación
+        marker = L.marker([lat, lng]).addTo(map);
+        savedLocation = { lat: lat, lng: lng };
+    }
 
-        // Función para mostrar la ubicación actual
-        document.getElementById('showLocationButton').addEventListener('click', function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var lat = position.coords.latitude;
-                    var lng = position.coords.longitude;
+    // Agrega un evento de clic al mapa
+    map.on('click', onMapClick);
 
-                    alert('Ubicación actual:\nLatitud: ' + lat + '\nLongitud: ' + lng);
-                }, function(error) {
-                    alert('Error al obtener la ubicación: ' + error.message);
+    // Obtén las coordenadas de la vista inicial del mapa
+    var initialView = map.getCenter();
+    var initialLat = initialView.lat;
+    var initialLng = initialView.lng;
+
+    // Almacena la ubicación inicial en savedLocation
+    savedLocation = { lat: initialLat, lng: initialLng };
+
+
+    // Función para guardar la ubicación actual
+    function guardarUbicacion() {
+        if (savedLocation) {
+            var latitud = savedLocation.lat;
+            var longitud = savedLocation.lng;
+            var url = `/guardar_ubicacion/${latitud}/${longitud}`;
+
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        alert('Ubicación guardada correctamente.');
+                    } else {
+                        alert('Error al guardar la ubicación.');
+                    }
+                })
+                .catch(error => {
+                    alert('Error al guardar la ubicación: ' + error);
                 });
-            } else {
-                alert('Geolocalización no es compatible en este navegador.');
-            }
-        });
-    </script>
-{% endblock contenido %}
+        } else {
+            alert('Primero debes obtener una ubicación para guardar.');
+        }
+    }
 
+      // Función para cargar y mostrar ubicaciones guardadas
+    function cargarUbicacionesGuardadas() {
+        // Realiza una solicitud para obtener las ubicaciones guardadas
+        fetch('/ubicaciones_guardadas') // Reemplaza con la URL correcta de tu backend
+            .then(response => response.json())
+            .then(data => {
+                // Itera sobre las ubicaciones y crea marcadores en el mapa
+                data.forEach(ubicacion => {
+                    var marcador = L.marker([ubicacion.lat, ubicacion.lng]).addTo(map);
+                    // Puedes personalizar el marcador, si lo deseas
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar las ubicaciones guardadas: ' + error);
+            });
+    }
+
+    // Llama a la función para cargar las ubicaciones guardadas
+    cargarUbicacionesGuardadas();
+
+</script>
+{% endblock contenido %}

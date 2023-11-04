@@ -12,5 +12,5 @@ urlpatterns = [
     path('crear_retraso/', ViewCrearRetraso.as_view(), name='crear_retraso'),
     path('editar_retraso/<int:pk>/', ViewEditarRetraso.as_view(), name='editar_retraso'),
     path('eliminar_retraso/<int:pk>/', ViewEliminarRetraso.as_view(), name='eliminar_retraso'),
-    path('ver_retraso/', ViewListarRetraso.as_view(), name='ver_retraso')
+    path('ver_retraso/', ViewListarRetraso.as_view(), name='ver_retraso'),
 ]

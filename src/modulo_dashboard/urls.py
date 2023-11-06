@@ -8,4 +8,5 @@ urlpatterns = [
     path('', DashboardView.as_view(), name='index'),
     path('guardar_ubicacion/<str:latitud>/<str:longitud>/', views.guardar_ubicacion, name='guardar_ubicacion'),
     path('obtener_ubicaciones/', views.obtener_ubicaciones, name='obtener_ubicaciones'),
+
 ]

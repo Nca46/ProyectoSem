@@ -6,26 +6,37 @@
 {% endblock %}
 {% block contenido %}
 
-    <h2>Horarios</h2>
-    <ul>
-        {% for item in items %}
-            <li>{{ item.dia }} - {{ item.horario_inicio }} a {{ item.horario_fin }}</li>
-        {% endfor %}
-    </ul>
+<div style="display: flex;">
+        <div style="flex: 1;">
+            <h2 style="color: blue; font-size: 24px;">Horarios</h2>
+            <ul>
+                {% for item in items %}
+                    <li>{{ item.dia }} - {{ item.horario_inicio }} a {{ item.horario_fin }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div style="flex: 1;">
+            <h2 style="color: green; font-size: 24px;">Notificaciones de Retraso</h2>
+            <ul id="notificacionesList">
+                {% for retraso in retrasos %}
+                    <li>
+                        <strong>{{ retraso.titulo }}</strong><br>
+                        Día: {{ retraso.dia }}<br>
+                        Descripción: {{ retraso.descripcion }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
-     <h2>Notificaciones de Retraso</h2>
-  <ul id="notificacionesList">
-    {% for retraso in retrasos %}
-      <li>
-        <strong>{{ retraso.titulo }}</strong><br>
-        Día: {{ retraso.dia }}<br>
-        Descripción: {{ retraso.descripcion }}
-      </li>
-    {% endfor %}
-  </ul>
 
-<button id="saveLocationButton" onclick="guardarUbicacion()">Guardar Ubicación</button>
-<div id="map" style="height: 400px; width: 100%"></div>
+{% if user.is_authenticated %}
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+    <button id="saveLocationButton" onclick="guardarUbicacion()" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; cursor: pointer; margin: 10px auto 0;">Guardar Ubicación</button>
+</div>
+{% endif %}
+
+<div id="map" style="height: 400px; width: 100%; border: 1px solid #ccc;"></div>
 <script>
     var map = L.map('map').setView([15.4844, -90.3770], 13);
 
@@ -47,6 +58,7 @@
             });
     }
     cargarUbicaciones()
+
 
     var savedLocation = null; // Variable para almacenar la ubicación guardada
 
@@ -102,5 +114,6 @@
             alert('Primero debes obtener una ubicación para guardar.');
         }
     }
+
 </script>
 {% endblock contenido %}

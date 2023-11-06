@@ -14,7 +14,7 @@
     </ul>
 
      <h2>Notificaciones de Retraso</h2>
-  <ul>
+  <ul id="notificacionesList">
     {% for retraso in retrasos %}
       <li>
         <strong>{{ retraso.titulo }}</strong><br>
@@ -24,7 +24,6 @@
     {% endfor %}
   </ul>
 
-
 <button id="saveLocationButton" onclick="guardarUbicacion()">Guardar Ubicación</button>
 <div id="map" style="height: 400px; width: 100%"></div>
 <script>
@@ -33,6 +32,21 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
+
+    // Función para cargar y mostrar las ubicaciones almacenadas
+    function cargarUbicaciones() {
+        fetch('/obtener_ubicaciones/')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(ubicacion => {
+                    L.marker([ubicacion.latitud, ubicacion.longitud]).addTo(map);
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener ubicaciones:', error);
+            });
+    }
+    cargarUbicaciones()
 
     var savedLocation = null; // Variable para almacenar la ubicación guardada
 
@@ -88,26 +102,5 @@
             alert('Primero debes obtener una ubicación para guardar.');
         }
     }
-
-      // Función para cargar y mostrar ubicaciones guardadas
-    function cargarUbicacionesGuardadas() {
-        // Realiza una solicitud para obtener las ubicaciones guardadas
-        fetch('/ubicaciones_guardadas') // Reemplaza con la URL correcta de tu backend
-            .then(response => response.json())
-            .then(data => {
-                // Itera sobre las ubicaciones y crea marcadores en el mapa
-                data.forEach(ubicacion => {
-                    var marcador = L.marker([ubicacion.lat, ubicacion.lng]).addTo(map);
-                    // Puedes personalizar el marcador, si lo deseas
-                });
-            })
-            .catch(error => {
-                console.error('Error al cargar las ubicaciones guardadas: ' + error);
-            });
-    }
-
-    // Llama a la función para cargar las ubicaciones guardadas
-    cargarUbicacionesGuardadas();
-
 </script>
 {% endblock contenido %}

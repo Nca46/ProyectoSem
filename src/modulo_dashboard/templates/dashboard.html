@@ -76,27 +76,24 @@
         }).addTo(map);
 
         function cargarUbicaciones() {
+            // Elimina los marcadores existentes para evitar duplicados
+            map.eachLayer(function (layer) {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
 
-
-            {%  for parada in paradas %}
-                L.marker([
-                    "{{ parada.latitud }}".replace(',', '.'),
-                    "{{ parada.longitud }}".replace(',', '.')
-
-                ]).addTo(map);
-            {% endfor %}
-
-/*            fetch('/obtener_ubicaciones/')
+            // Obtener ubicaciones del servidor
+            fetch('/obtener_ubicaciones/')
                 .then(response => response.json())
                 .then(data => {
                     data.forEach(ubicacion => {
-
+                        L.marker([ubicacion.latitud, ubicacion.longitud]).addTo(map);
                     });
                 })
                 .catch(error => {
                     console.error('Error al obtener ubicaciones:', error);
                 });
-            */
         }
 
         cargarUbicaciones();

@@ -41,7 +41,7 @@ class DashboardView(TemplateView):
     fecha_actual = date.today()
 
     # Filtra los retrasos para mostrar solo los de la fecha actual
-    retrasos = Retraso.objects.filter(dia=fecha_actual)
+    retrasos = Retraso.objects.all()
     items = Horario.objects.all()
     paradas = Ubicacion.objects.all()
 

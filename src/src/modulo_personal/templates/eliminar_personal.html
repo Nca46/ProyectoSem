@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<h2>Eliminar Personal</h2>
+
+<p>¿Estás seguro de que deseas eliminar a:?</p>
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-danger" type="submit">Confirmar Eliminación</button>
+  <a href="{% url 'personal:ver_personal' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+{% endblock contenido %}

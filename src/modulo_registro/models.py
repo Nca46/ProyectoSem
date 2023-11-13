@@ -22,5 +22,5 @@ class Laboral(models.Model):
 
 class Retraso(models.Model):
     titulo = models.CharField(max_length=256, blank=False, verbose_name='Titulo')
-    dia = models.DateTimeField(verbose_name='Dia')
+    dia = models.DateTimeField(verbose_name='Dia', )
     descripcion = models.CharField(max_length=256, verbose_name='Descripcion')

@@ -1,0 +1,40 @@
+/* Estilo predeterminado del enlace */
+.nav-link {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Estilo cuando el mouse está encima del enlace */
+.nav-link:hover {
+    color: blue;
+    transform: scale(1.1);
+}
+
+/* Estilo cuando el enlace está activo (se hace clic) */
+.nav-link:active {
+    transform: scale(0.9);
+}
+/* Estilo de Icono y lugar */
+.navbar-brand i {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+/* Estilo para el footer */
+footer {
+    position: fixed;
+    bottom: -2px;
+    width: 100%;
+    background-color: #333; /* Cambia el color de fondo  */
+    color: white; /* Cambia el color de texto  */
+    text-align: center;
+    padding: 5px;
+    font-style: italic;
+}
+.bg-custom {
+    background-color: #007bff; /* Cambia el color a azul*/
+}
+/* Agrega esto a tu archivo CSS (style.css) o en línea en tu plantilla base.html */
+#map {
+    margin-bottom: 50px; /* Ajusta este valor según sea necesario para evitar que el mapa se solape con el footer */
+}

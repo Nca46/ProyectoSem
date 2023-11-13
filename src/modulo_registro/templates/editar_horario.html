@@ -7,7 +7,7 @@
     <div class="card-body">
       <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+          {{ form.as_p }}
         <div class="text-center">
           <button class="btn btn-primary" type="submit">Guardar Cambios</button>
           <a href="{% url 'horario:ver_horario' %}" class="btn btn-secondary ml-2">Cancelar</a>

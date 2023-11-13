@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+{% endblock %}
+{% block contenido %}
+
+<div style="display: flex;">
+        <div style="flex: 1;">
+            <h2 style="color: blue; font-size: 24px;">Horarios</h2>
+            <ul>
+                {% for item in items %}
+                    <li>{{ item.dia }} - {{ item.horario_inicio }} a {{ item.horario_fin }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div style="flex: 1;">
+            <h2 style="color: green; font-size: 24px;">Notificaciones de Retraso</h2>
+            <ul id="notificacionesList">
+                {% for retraso in retrasos %}
+                    <li>
+                        <strong>{{ retraso.titulo }}</strong><br>
+                        Día: {{ retraso.dia }}<br>
+                        Descripción: {{ retraso.descripcion }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+{% if user.is_authenticated %}
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+    <button id="saveLocationButton" onclick="guardarUbicacion()" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; cursor: pointer; margin: 10px auto 0;">Guardar Ubicación</button>
+</div>
+{% endif %}
+
+<div id="map" style="height: 400px; width: 100%; border: 1px solid #ccc;"></div>
+<script>
+    var map = L.map('map').setView([15.4844, -90.3770], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    // Función para cargar y mostrar las ubicaciones almacenadas
+    function cargarUbicaciones() {
+        fetch('/obtener_ubicaciones/')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(ubicacion => {
+                    L.marker([ubicacion.latitud, ubicacion.longitud]).addTo(map);
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener ubicaciones:', error);
+            });
+    }
+    cargarUbicaciones()
+
+
+    var savedLocation = null; // Variable para almacenar la ubicación guardada
+
+    var marker = null; // Variable para almacenar el marcador en el mapa
+
+    // Función para manejar el clic en el mapa
+    function onMapClick(e) {
+        // Obtiene las coordenadas donde se hizo clic
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+
+        // Si ya existe un marcador, quítalo
+        if (marker) {
+            map.removeLayer(marker);
+        }
+
+        // Crea un marcador en esa ubicación
+        marker = L.marker([lat, lng]).addTo(map);
+        savedLocation = { lat: lat, lng: lng };
+    }
+
+    // Agrega un evento de clic al mapa
+    map.on('click', onMapClick);
+
+    // Obtén las coordenadas de la vista inicial del mapa
+    var initialView = map.getCenter();
+    var initialLat = initialView.lat;
+    var initialLng = initialView.lng;
+
+    // Almacena la ubicación inicial en savedLocation
+    savedLocation = { lat: initialLat, lng: initialLng };
+
+
+    // Función para guardar la ubicación actual
+    function guardarUbicacion() {
+        if (savedLocation) {
+            var latitud = savedLocation.lat;
+            var longitud = savedLocation.lng;
+            var url = `/guardar_ubicacion/${latitud}/${longitud}`;
+
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        alert('Ubicación guardada correctamente.');
+                    } else {
+                        alert('Error al guardar la ubicación.');
+                    }
+                })
+                .catch(error => {
+                    alert('Error al guardar la ubicación: ' + error);
+                });
+        } else {
+            alert('Primero debes obtener una ubicación para guardar.');
+        }
+    }
+
+</script>
+{% endblock contenido %}

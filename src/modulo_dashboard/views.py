@@ -4,7 +4,6 @@ from datetime import date
 from django.shortcuts import render, redirect
 from .models import Ubicacion
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
 
 # Create your views here.
 

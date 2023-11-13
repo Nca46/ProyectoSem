@@ -15,8 +15,6 @@
         {% endif %}
     </div>
 
-    <h1>Paradas de autobuses</h1>
-
     <div class="row g-3">
         <div class="col-12 col-md-6">
             <div class="card">
@@ -24,24 +22,21 @@
                     <h2>Horarios</h2>
                 </div>
                 <div class="card-body">
-
                     <div class="col-12 col-sm-6">
-                        <ul>
+                        <ul id="horariosList">
                             {% for item in items %}
                                 <li>{{ item.dia }} - {{ item.horario_inicio }} a {{ item.horario_fin }}
-                                <span class="badge rounded-pill bg-success">4 Min</span>
+                                    <span class="badge rounded-pill bg-success">4 Min</span>
                                 </li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div>
-                        <div class="col-12">
-                            <button id="getCurrentLocationButton" onclick="obtenerUbicacionActual()"
-                                    class="btn btn-success">Obtener Ubicación
-                            </button>
-                        </div>
+                    <div class="col-12">
+                        <button id="getCurrentLocationButton" onclick="obtenerUbicacionActual()"
+                                class="btn btn-success">Obtener Ubicación
+                        </button>
                     </div>
                 </div>
             </div>
@@ -51,9 +46,8 @@
                     <h2>Retrasos</h2>
                 </div>
                 <div class="card-body">
-
                     <div class="col-12 col-sm-6">
-                        <ul>
+                        <ul id="retrasosList">
                             {% for retraso in retrasos %}
                                 <li>{{ retraso.titulo }} - {{ retraso.dia }} - {{ retraso.descripcion }}</li>
                             {% endfor %}
@@ -95,6 +89,47 @@
                     console.error('Error al obtener ubicaciones:', error);
                 });
         }
+
+        function actualizarHorariosYRetrasos() {
+            // Obtener horarios del servidor
+            fetch('/obtener_horarios/')
+                .then(response => response.json())
+                .then(data => {
+                    const horariosList = document.getElementById('horariosList');
+                    horariosList.innerHTML = "";
+                    data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = `${item.dia} - ${item.horario_inicio} a ${item.horario_fin}`;
+                        const badge = document.createElement('span');
+                        badge.className = 'badge rounded-pill bg-success';
+                        badge.textContent = '4 Min';
+                        li.appendChild(badge);
+                        horariosList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener horarios:', error);
+                });
+
+            // Obtener retrasos del servidor
+            fetch('/obtener_retrasos/')
+                .then(response => response.json())
+                .then(data => {
+                    const retrasosList = document.getElementById('retrasosList');
+                    retrasosList.innerHTML = "";
+                    data.forEach(retraso => {
+                        const li = document.createElement('li');
+                        li.textContent = `${retraso.titulo} - ${retraso.dia} - ${retraso.descripcion}`;
+                        retrasosList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener retrasos:', error);
+                });
+        }
+
+        // Actualizar cada 5 minutos (300,000 milisegundos)
+        setInterval(actualizarHorariosYRetrasos, 300000);
 
         cargarUbicaciones();
 
@@ -149,27 +184,27 @@
             }
         }
 
-            // Función para obtener la ubicación actual en tiempo real
-            function obtenerUbicacionActual() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        function (position) {
-                            var lat = position.coords.latitude;
-                            var lng = position.coords.longitude;
+        // Función para obtener la ubicación actual en tiempo real
+        function obtenerUbicacionActual() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        var lat = position.coords.latitude;
+                        var lng = position.coords.longitude;
 
-                            if (marker) {
-                                map.removeLayer(marker);
-                            }
+                        if (marker) {
+                            map.removeLayer(marker);
+                        }
 
-                            // Cambia el icono del marcador a rojo
-                            var redIcon = L.icon({
-                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                                iconSize: [25, 41],
-                                iconAnchor: [12, 41],
-                                popupAnchor: [1, -34],
-                                shadowSize: [41, 41]
-                            });
+                        // Cambia el icono del marcador a rojo
+                        var redIcon = L.icon({
+                            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [12, 41],
+                            popupAnchor: [1, -34],
+                            shadowSize: [41, 41]
+                        });
 
                         marker = L.marker([lat, lng], {icon: redIcon}).addTo(map);
                         savedLocation = {lat: lat, lng: lng};
@@ -181,14 +216,15 @@
                         console.error('Error al obtener la ubicación actual:', error);
                         alert('Error al obtener la ubicación actual. Asegúrate de haber permitido el acceso a la ubicación.');
                     }
-                        );
-                    } else {
-                        alert('Tu navegador no admite la geolocalización.');
-                    }
-                }
+                );
+            } else {
+                alert('Tu navegador no admite la geolocalización.');
+            }
+        }
 
-                document.addEventListener("DOMContentLoaded", function() {
-        cargarUbicaciones();
-    });
-</script>
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUbicaciones();
+            actualizarHorariosYRetrasos(); // Actualizar al cargar la página
+        });
+    </script>
 {% endblock contenido %}

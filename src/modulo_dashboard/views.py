@@ -4,6 +4,7 @@ from datetime import date
 from django.shortcuts import render, redirect
 from .models import Ubicacion
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -32,8 +33,6 @@ class ObtenerUbicaciones(View):
             print(e)
 
         return JsonResponse(data, safe=False)
-
-
 
 class DashboardView(TemplateView):
     template_name = 'dashboard.html'

@@ -1,13 +1,13 @@
 from django.db import models
 
 dias = (
-    ('lunes', 'Lunes'),
-    ('martes', 'Martes'),
-    ('miercoles', 'Miercoles'),
-    ('jueves', 'Jueves'),
-    ('viernes', 'Viernes'),
-    ('sabado', 'Sabado'),
-    ('domingo', 'Domingo')
+    ('Lunes', 'Lunes'),
+    ('Martes', 'Martes'),
+    ('Miercoles', 'Miercoles'),
+    ('Jueves', 'Jueves'),
+    ('Viernes', 'Viernes'),
+    ('Sabado', 'Sabado'),
+    ('Domingo', 'Domingo')
 )
 
 class Horario(models.Model):

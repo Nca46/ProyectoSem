@@ -1,1 +1,0 @@
-web: gunicorn proy_buses.wsgi --log-file -
